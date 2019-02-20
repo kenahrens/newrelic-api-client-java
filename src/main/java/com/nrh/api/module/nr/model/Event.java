@@ -10,7 +10,9 @@ public class Event {
   private Date timestamp;
   private String eventType;
   private Map<String,String> sAttributes = new HashMap<String, String>();
-  private Map<String,Double> nAttributes = new HashMap<String, Double>();
+  private Map<String,Double> dAttributes = new HashMap<String, Double>();
+  private Map<String,Integer> iAttributes = new HashMap<String, Integer>();
+
 
   public Event(String eventType) {
     this.eventType = eventType;
@@ -40,13 +42,13 @@ public class Event {
 
   public void addIntAttribute(String name, Integer value) {
     if (value != null) {
-      nAttributes.put(name, value.doubleValue());
+      iAttributes.put(name, value);
     }
   }
 
   public void addDoubleAttribute(String name, Double value) {
     if (value != null) {
-      nAttributes.put(name, value);
+      dAttributes.put(name, value);
     }
   }
 
@@ -60,9 +62,14 @@ public class Event {
       jEvent.put(name, sAttributes.get(name));
     }
 
-    // Add all the numeric attributes
-    for (String name : nAttributes.keySet()) {
-      jEvent.put(name, nAttributes.get(name));
+    // Add all the integer attributes
+    for (String name : iAttributes.keySet()) {
+      jEvent.put(name, iAttributes.get(name));
+    }
+
+    // Add all the double attributes
+    for (String name : dAttributes.keySet()) {
+      jEvent.put(name, dAttributes.get(name));
     }
     
     return jEvent;

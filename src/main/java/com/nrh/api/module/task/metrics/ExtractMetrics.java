@@ -72,6 +72,7 @@ public class ExtractMetrics {
     metricConfig.addMetricName(fullName, shortName);
   }
 
+  @Trace
   private ArrayList<MetricConfig> cfgExpand(MetricConfig metricConfig) throws IOException {
     
     ArrayList<MetricConfig> resultList = new ArrayList<>();
@@ -84,6 +85,7 @@ public class ExtractMetrics {
 
     // Fetch the host ids and make a config for each one
     if (configType.equals(AppConfig.TYPE_APP_HOST)) {
+      System.out.println("Fetching host list");
       ArrayList<AppHostModel> appHostList = apiHostClient.list(metricConfig);
       for (AppHostModel appHostModel : appHostList) {
         resultList.add(hostModelToConfig(appHostModel, metricConfig));
@@ -92,6 +94,7 @@ public class ExtractMetrics {
 
     // Feth the instance ids and make a config for each one
     if (configType.equals(AppConfig.TYPE_APP_INSTANCE)) {
+      System.out.println("Fetching instance list");
       ArrayList<AppInstanceModel> appInstanceList = apiInstanceClient.list(metricConfig);
       for (AppInstanceModel appInstanceModel : appInstanceList) {
         resultList.add(instanceModelToConfig(appInstanceModel, metricConfig));
